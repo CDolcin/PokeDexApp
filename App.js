@@ -11,6 +11,9 @@ import TeamScreen from './src/screens/TeamScreen';
 import GameScreen from './src/screens/GameScreen';
 import PokemonDetailScreen from './src/screens/PokemonDetailScreen';
 
+// NEW: Favorites screen
+import FavoritesScreen from './src/screens/FavoritesScreen';
+
 import { TeamProvider } from './src/context/TeamContext';
 import { FavoritesProvider } from './src/context/FavoritesContext';
 
@@ -24,6 +27,10 @@ console.log('TeamProvider:', typeof TeamProvider);
 console.log('FavoritesProvider:', typeof FavoritesProvider);
 console.log('NavigationContainer:', typeof NavigationContainer);
 console.log('Ionicons:', typeof Ionicons);
+
+// NEW: Debugging Favorites screen
+console.log('FavoritesScreen:', typeof FavoritesScreen);
+
 console.log('=================================');
 
 const Tab = createBottomTabNavigator();
@@ -41,14 +48,23 @@ function BottomTabs() {
             iconName = focused
               ? 'grid'
               : 'grid-outline';
+
           } else if (route.name === 'My Team') {
             iconName = focused
               ? 'people'
               : 'people-outline';
+
           } else if (route.name === 'Game') {
             iconName = focused
               ? 'game-controller'
               : 'game-controller-outline';
+
+          // NEW: Favorites tab icon
+          } else if (route.name === 'Favorites') {
+            iconName = focused
+              ? 'heart'
+              : 'heart-outline';
+
           } else {
             iconName = 'ellipse-outline';
           }
@@ -73,6 +89,7 @@ function BottomTabs() {
         headerTitleAlign: 'center',
       })}
     >
+      {/* Existing Pokédex tab */}
       <Tab.Screen
         name="Pokédex"
         component={PokedexScreen}
@@ -81,6 +98,7 @@ function BottomTabs() {
         }}
       />
 
+      {/* Existing My Team tab */}
       <Tab.Screen
         name="My Team"
         component={TeamScreen}
@@ -89,11 +107,22 @@ function BottomTabs() {
         }}
       />
 
+      {/* Existing Game tab */}
       <Tab.Screen
         name="Game"
         component={GameScreen}
         options={{
           title: "Who's That Pokémon?",
+        }}
+      />
+
+      {/* NEW: Favorites tab */}
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          title: 'My Favorite Pokémon',
+          tabBarLabel: 'Favorites',
         }}
       />
     </Tab.Navigator>
